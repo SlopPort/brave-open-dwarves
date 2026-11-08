@@ -1,0 +1,83 @@
+PASS original archive remains imported
+PASS two-finger movement advances hero
+PASS second pointer holds attack
+PASS attack fires while moving
+PASS releasing fingers clears movement and attack
+PASS retry restores health after death
+PASS checkpoint restores position
+PASS checkpoint restores health
+PASS restored game starts paused
+PASS level 11 contains three original lifts
+PASS horizontal lift carries hero
+PASS vertical lift carries hero upward (platform=766.0, hero feet=766.0, initial=768.0)
+PASS checkpoint restores lift position
+PASS door opening waits before changing map
+PASS checkpoint restores door animation
+PASS open door advances to next map
+PASS item 31 awards treasure without healing
+PASS checkpoint retains scored treasure
+PASS item 45 heals by original ten points
+PASS healing caps health and does not grant keys
+PASS original lethal cell kills despite immunity
+PASS original water cell starts breath counter
+PASS checkpoint restores breath and drowning progress
+PASS releasing ladder control holds hero in place
+PASS checkpoint resumes holding ladder
+PASS pause freezes world animation clock
+PASS jump releases ladder into rising motion
+PASS campaign transition preserves score and health
+PASS checkpoint preserves campaign score
+PASS campaign ends at map 50 without entering bonus maps
+PASS checkpoint retains completed campaign state
+PASS map 10 instantiates worm boss
+PASS defeated worm boss unlocks door without keys
+PASS checkpoint preserves defeated boss
+PASS map 20 instantiates minotaur boss
+PASS defeated minotaur unlocks exit
+PASS checkpoint preserves defeated minotaur
+PASS door clock uses nominal original 75 Hz
+PASS opposing projectiles intercept and reduce remaining damage
+PASS enemy contact deals original five health points
+PASS item 40 restores health and grants 500 ticks protection
+PASS checkpoint retains remaining protection duration
+PASS map 30 instantiates spider boss
+PASS defeated spider unlocks exit
+PASS web bind blocks hero movement
+PASS checkpoint retains remaining web bind
+PASS map 40 instantiates fire elemental with original health
+PASS fire elemental fires three original missiles on device
+PASS fire missile retains original type and reduced damage
+PASS fire missile retains original type and reduced damage
+PASS fire missile retains original type and reduced damage
+PASS defeated fire elemental unlocks exit
+PASS checkpoint preserves defeated fire elemental
+PASS fire teleport selects original floor and empty cell above
+PASS fire teleport prepares original quick follow-up cast
+PASS checkpoint preserves teleported boss position
+PASS checkpoint preserves boss attack and teleport countdowns
+PASS checkpoint preserves enemy vertical movement and turn delay
+PASS restored prepared cast fires at original threshold
+PASS checkpoint preserves pending teleport state
+PASS map 50 instantiates lich with original health
+PASS lich spell pattern 0 fires on device
+PASS lich spell pattern 1 fires on device
+PASS lich spell pattern 2 fires on device
+PASS checkpoint preserves lich teleport position and state
+PASS defeated lich arena unlocks final exit
+PASS checkpoint preserves defeated lich
+PASS lich hit primes original five-tick teleport on device
+PASS checkpoint preserves hit-triggered teleport countdown
+PASS fire elemental ignores original immune projectile type
+PASS fire elemental takes double damage from original vulnerability
+PASS wizard starts with original energy reserve
+PASS original item6 replenishes first energy channel
+PASS energy pickup caps at original hundred
+PASS base wizard shot consumes one energy on device
+PASS empty energy blocks wizard casting on device
+PASS checkpoint preserves all four energy reserves
+PASS campaign transition preserves energy reserves
+PASS wizard chapter transition resets original energy reserve
+PASS chapter energy reset preserves score and health
+PASS checkpoint preserves reset chapter energy
+PASS warrior chapter transition uses original second energy channel
+

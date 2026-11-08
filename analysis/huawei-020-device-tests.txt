@@ -1,0 +1,43 @@
+PASS original archive remains imported
+PASS two-finger movement advances hero
+PASS second pointer holds attack
+PASS attack fires while moving
+PASS releasing fingers clears movement and attack
+PASS retry restores health after death
+PASS checkpoint restores position
+PASS checkpoint restores health
+PASS restored game starts paused
+PASS level 11 contains three original lifts
+PASS horizontal lift carries hero
+PASS vertical lift carries hero upward (platform=766.0, hero feet=766.0, initial=768.0)
+PASS checkpoint restores lift position
+PASS door opening waits before changing map
+PASS checkpoint restores door animation
+PASS open door advances to next map
+PASS item 31 awards treasure without healing
+PASS checkpoint retains scored treasure
+PASS item 45 heals by original ten points
+PASS healing caps health and does not grant keys
+PASS original lethal cell kills despite immunity
+PASS original water cell starts breath counter
+PASS checkpoint restores breath and drowning progress
+PASS releasing ladder control holds hero in place
+PASS checkpoint resumes holding ladder
+PASS pause freezes world animation clock
+PASS jump releases ladder into rising motion
+PASS campaign transition preserves score and health
+PASS checkpoint preserves campaign score
+PASS campaign ends at map 50 without entering bonus maps
+PASS checkpoint retains completed campaign state
+PASS map 10 instantiates worm boss
+PASS defeated worm boss unlocks door without keys
+PASS checkpoint preserves defeated boss
+PASS map 20 instantiates minotaur boss
+PASS defeated minotaur unlocks exit
+PASS checkpoint preserves defeated minotaur
+PASS door clock uses nominal original 75 Hz
+PASS opposing projectiles intercept and reduce remaining damage
+PASS enemy contact deals original five health points
+PASS item 40 restores health and grants 500 ticks protection
+PASS checkpoint retains remaining protection duration
+

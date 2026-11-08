@@ -1,0 +1,24 @@
+PASS original archive remains imported
+PASS two-finger movement advances hero
+PASS second pointer holds attack
+PASS attack fires while moving
+PASS releasing fingers clears movement and attack
+PASS retry restores health after death
+PASS checkpoint restores position
+PASS checkpoint restores health
+PASS restored game starts paused
+PASS level 11 contains three original lifts
+PASS horizontal lift carries hero
+PASS vertical lift carries hero upward (platform=766.0, hero feet=766.0, initial=768.0)
+PASS checkpoint restores lift position
+PASS door opening waits before changing map
+PASS checkpoint restores door animation
+PASS open door advances to next map
+PASS item 31 awards treasure without healing
+PASS checkpoint retains scored treasure
+PASS item 45 heals using scaled original amount
+PASS healing caps health and does not grant keys
+PASS original lethal cell kills despite immunity
+PASS original water cell starts breath counter
+PASS checkpoint restores breath and drowning progress
+

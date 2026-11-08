@@ -1,0 +1,6 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.braveopendwarves.tests" android:versionCode="1" android:versionName="1">
+  <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="35"/>
+  <application android:label="BOD Device Tests"/>
+  <instrumentation android:name="org.braveopendwarves.DeviceTestRunner" android:targetPackage="org.braveopendwarves" android:label="BOD device checks"/>
+</manifest>
+
