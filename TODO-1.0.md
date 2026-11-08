@@ -24,7 +24,7 @@ Legenda: **[PC]** zrobione i sprawdzone na komputerze, **[TEL]** wymaga Huawei.
 ## 0.35: dokończenie fizyki [PC]
 
 - [ ] Współrzędne portu przeliczyć na oryginalne: środek x, stopy y (`0x10`, `0x14`) lub udokumentować stałe przesunięcie
-- [ ] Podłoże: sonda `0x415ce0` (szerokość/8, typ 1 lub flaga 0x20, osłona i flaga 0x400)
+- [x] Podłoże: sonda `0x415ce0` (szerokość/8, typ 1 lub flaga 0x20); osłona i flaga 0x400 czekają na czar tarczy
 - [ ] Wejście i zejście z drabiny: `0x40a7f1`, `0x40a956`, `0x40ab8b`, zejście `0x415e20`
 - [ ] Automatyczne powtarzanie skoku i flaga `0x4c` bit 4 / `0x4b0c80` (`0x40a8fa`)
 - [ ] Spadanie i ruch drugiego bohatera: pełny odczyt `0x40cbfb..0x40cc67`

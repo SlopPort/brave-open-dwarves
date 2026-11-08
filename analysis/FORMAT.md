@@ -314,3 +314,5 @@ Tabela 0x49e400: 12 rekordów po 14 bajtów (koszty czterech kanałów, opóźni
 Wybór czaru (0x417690): identyfikator = kanał + poziom*4; dostępny, gdy poziom kanału >= poziom+1 (0x417768). Tabela skoków 0x40c0da potwierdza kolejność czarów. Port ma czary 0..4; czar 4 to tornado (typ 10, koszt 5, obrażenia 1, zasięg 1920, prędkość 6, klatki torn_1..4). Czy tornado przebija cele, nie ustalono; przerwa powtórzenia przyjęta jak dla czaru 0, bo tabela podaje tę samą wartość 8.
 
 Czar 8 (sople, 0x40bcaf, konstruktor typu 14 przy 0x402e12): 7 pocisków, x = lewa krawędź ekranu + 10 + losowo(szerokość - 20), y = góra ekranu, prędkość pionowa 7 + losowo(0..3), obrażenia 15, zasięg 640. Typ 13 krąży po promieniu, typ 9 używa tabel kierunków 0x49e388/0x49e3a8, a tarcza ustawia +0x3c=500; te czary nie są jeszcze w porcie.
+
+Podłoże bohatera (0x415ce0): dwa punkty środek ± szerokość/8 przy stopy+1; komórka poza mapą, typ 1 lub flaga 0x20 podtrzymuje. Z tarczą także flaga 0x400. Trzymany skok startuje ponownie po wylądowaniu (0x40a8b0); blokada przy bicie 0x10 pola +0x4c i globalnej 0x4b0c80 nie jest jeszcze przeniesiona.

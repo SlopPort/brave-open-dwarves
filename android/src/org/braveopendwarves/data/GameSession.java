@@ -214,6 +214,14 @@ public final class GameSession {
         else if (door.started) host.doorSound();
     }
 
+    /** Floor probe from 0x415ce0: outside the map, type 1, or platform flag 0x20. */
+    private boolean floor(int column, int row, boolean climb) {
+        if (climb) return solid(column, row, true);
+        if (column < 0 || row < 0 || column >= level.width || row >= level.height) return true;
+        int[] cell = level.cell(column, row);
+        return cell[0] == 1 || (cell[5] & 0x20) != 0;
+    }
+
     private boolean free(int column, int row) {
         if (row < 0) return true;
         return column >= 0 && column < level.width && row < level.height && level.cell(column, row)[0] == 0;
@@ -236,7 +244,8 @@ public final class GameSession {
         float walk = (water ? WATER_SPEED : WALK_SPEED) * OriginalClock.HZ, vertical = (water ? WATER_SPEED : AIR_SPEED) * OriginalClock.HZ;
         float vx = right ? walk : left ? -walk : 0;
         if (vx != 0) facing = vx > 0 ? 1 : -1;
-        if (jump && (ground || climb)) { rise = JUMP_HEIGHT; ground = false; climb = climbing = false; }
+        // Holding the button jumps again on landing (0x40a8b0).
+        if ((jump && (ground || climb)) || (jumpHeld && ground)) { rise = JUMP_HEIGHT; ground = false; climb = climbing = false; }
         jump = false;
         if (!jumpHeld) rise = 0;
         // The second hero moves faster while rising (0x40c95e..0x40c9c4).
@@ -250,7 +259,11 @@ public final class GameSession {
         else vy = vertical;
         float ny = y + vy * dt;
         ground = false;
-        if (vy >= 0) { int r = (int) ((ny + 50) / 64); for (int c = (int) (x + 2) / 64; c <= (int) (x + 29) / 64; c++) if (solid(c, r, climb)) { ny = r * 64 - 50; vy = 0; ground = true; break; } }
+        if (vy >= 0) {
+            int r = (int) ((ny + 50) / 64), reach = HERO_WIDTH / 8;
+            int leftColumn = (int) Math.floor((x + 16 - reach) / 64), rightColumn = (int) Math.floor((x + 16 + reach) / 64);
+            if (floor(leftColumn, r, climb) || floor(rightColumn, r, climb)) { ny = r * 64 - 50; vy = 0; ground = true; }
+        }
         else { int r = (int) Math.floor(ny / 64); for (int c = (int) (x + 2) / 64; c <= (int) (x + 29) / 64; c++) if (solid(c, r, climb)) { ny = (r + 1) * 64; vy = 0; rise = 0; break; } }
         if (vy >= 0) for (LiftWorld.Lift lift : lifts.lifts) {
             float floor = lift.floor();
