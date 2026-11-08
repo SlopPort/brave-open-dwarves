@@ -39,6 +39,10 @@ public final class CombatTest {
         w=new CombatWorld(map());f=new CombatWorld.Foe(6,400,232);w.foes.add(f);
         for(int i=0;i<360;i++)w.update(1f/120,100,206);check(w.health<20,"crawler projectile damages hero");check(f.hp==15,"hostile bolt does not damage shooter");
         w=new CombatWorld(map());f=new CombatWorld.Foe(5,160,196);w.foes.add(f);w.attack(100,206,1,false);check(f.hp==40&&w.kills==0,"large skeleton survives one melee strike");
+        w=new CombatWorld(map());w.abilityLevels[0]=1;w.cycleSpell();check(w.selectedSpell==0,"tier needs channel level two");
+        w.abilityLevels[0]=2;w.cycleSpell();check(w.selectedSpell==4,"tornado unlocks at level two");
+        w.energy[0]=4;check(!w.attack(100,206,1,true),"tornado needs five energy");
+        w.energy[0]=5;check(w.attack(100,206,1,true)&&w.energy[0]==0&&w.bolts.get(0).kind==10&&w.bolts.get(0).damage==1,"tornado uses original cost and shot");
         System.out.println("PASS combat: melee, facing, cooldown, projectiles, damage, immunity, death, patrol, healing");
     }
 }

@@ -21,7 +21,7 @@ public final class OriginalGameView extends View {
     AnmAnimations bossWormAnimations;
     Bitmap bossMino;
     AnmAnimations bossMinoAnimations;
-    SpriteFrames.Frame[] skullRight,skullLeft,fireMissiles,fireballRight,fireballLeft,lightning,earthRight,earthLeft;
+    SpriteFrames.Frame[] tornado,skullRight,skullLeft,fireMissiles,fireballRight,fireballLeft,lightning,earthRight,earthLeft;
     Bitmap lich;AnmAnimations lichAnimations;SpriteFrames.Frame icicle;
     Bitmap fireElemental;AnmAnimations fireElementalAnimations;
     SpriteFrames.Frame webFrame;Bitmap bossSpider;AnmAnimations bossSpiderAnimations;
@@ -43,6 +43,7 @@ public final class OriginalGameView extends View {
         fireElemental=bitmap("Data/Creatures/fire_elemental.pcx");fireElementalAnimations=new AnmAnimations(archive.read("Data/Creatures/fire_elemental.anm"),fireElemental.getWidth(),fireElemental.getHeight());
         bossSpider=bitmap("Data/Creatures/boss_spider.pcx");bossSpiderAnimations=new AnmAnimations(archive.read("Data/Creatures/boss_spider.anm"),bossSpider.getWidth(),bossSpider.getHeight());webFrame=frames.get("Web");
         bossMino=bitmap("Data/Creatures/boss_mino.pcx");bossMinoAnimations=new AnmAnimations(archive.read("Data/Creatures/boss_mino.anm"),bossMino.getWidth(),bossMino.getHeight());
+        tornado=new SpriteFrames.Frame[]{frames.get("torn_1"),frames.get("torn_2"),frames.get("torn_3"),frames.get("torn_4")};
         skullRight=new SpriteFrames.Frame[]{frames.get("skull_r1"),frames.get("skull_r2")};skullLeft=new SpriteFrames.Frame[]{frames.get("skull_l1"),frames.get("skull_l2")};
         earthRight=new SpriteFrames.Frame[]{frames.get("bte_right"),frames.get("bte_r2")};earthLeft=new SpriteFrames.Frame[]{frames.get("bte_left"),frames.get("bte_l2")};
         fireballRight=new SpriteFrames.Frame[]{frames.get("fbr_1"),frames.get("fbr_2"),frames.get("fbr_3")};fireballLeft=new SpriteFrames.Frame[]{frames.get("fbl_1"),frames.get("fbl_2"),frames.get("fbl_3")};lightning=new SpriteFrames.Frame[]{frames.get("lightning6_1"),frames.get("lightning6_2"),frames.get("lightning6_3")};
@@ -122,6 +123,7 @@ public final class OriginalGameView extends View {
             if(bolt.kind==6)f=(bolt.speed>0?earthRight:earthLeft)[((int)(bolt.age*OriginalClock.HZ)/4)&1];
             if(bolt.kind==5)f=(bolt.speed>0?fireballRight:fireballLeft)[((int)(bolt.age*OriginalClock.HZ)/4)%3];
             if(bolt.kind==8)f=lightning[((int)(bolt.age*OriginalClock.HZ)/4)%3];
+            if(bolt.kind==10)f=tornado[((int)(bolt.age*OriginalClock.HZ)/4)%4];
             if(bolt.kind==14)f=icicle;
             if(bolt.kind==9)f=fireMissiles[bolt.variant];
             if(bolt.kind==26)f=webFrame;

@@ -82,6 +82,10 @@ public final class SessionTest {
             }
             check(walks > 20 && fullJumps > 5 && releases > 5, "physics exercised: walks=" + walks + " jumps=" + fullJumps + " releases=" + releases);
 
+            PcxImage shots = PcxImage.decode(archive.read("Data/Shots.pcx"), true);
+            SpriteFrames frames = new SpriteFrames(archive.read("Data/SHOTS.FRM"), shots.width, shots.height);
+            for (int i = 1; i <= 4; i++) check(frames.get("torn_" + i) != null, "tornado frame " + i);
+
             GameSession clock = new GameSession(archive, save, HOST);
             clock.load(0);
             clock.tick(.05f);
