@@ -20,6 +20,8 @@ public final class GameSession {
     private static final float MAX_FRAME = .05f;
     /** Pixels per original step; jump height is a pixel budget set at 0x40a920. */
     public static final int WALK_SPEED = 3, AIR_SPEED = 4, WATER_SPEED = 2, CLIMB_SPEED = 2, JUMP_HEIGHT = 120;
+    /** Hero collision size from 0x40a300/0x40a330. */
+    public static final int HERO_WIDTH = 70, HERO_HEIGHT = 75;
     private float rise;
     /** Jump button currently down; releasing it ends the rise. */
     public boolean jumpHeld;
@@ -212,6 +214,17 @@ public final class GameSession {
         else if (door.started) host.doorSound();
     }
 
+    private boolean free(int column, int row) {
+        if (row < 0) return true;
+        return column >= 0 && column < level.width && row < level.height && level.cell(column, row)[0] == 0;
+    }
+
+    /** Side probe from 0x415980/0x415ae0: feet, middle and head at 3/8 of the width from the center. */
+    private boolean sideFree(float dx) {
+        int column = (int) Math.floor((x + 16 + dx + Math.signum(dx) * (HERO_WIDTH * 3 / 8)) / 64), feet = (int) y + 49;
+        return free(column, Math.floorDiv(feet, 64)) && free(column, Math.floorDiv(feet - HERO_HEIGHT / 2, 64)) && free(column, Math.floorDiv(feet - HERO_HEIGHT, 64));
+    }
+
     private void move(float dt) {
         boolean onLadder = level.ladder((int) (x + 16) / 64, (int) (y + 25) / 64) || level.ladder((int) (x + 16) / 64, (int) (y + 51) / 64);
         boolean climb = onLadder && (up || down || climbing);
@@ -226,9 +239,11 @@ public final class GameSession {
         if (jump && (ground || climb)) { rise = JUMP_HEIGHT; ground = false; climb = climbing = false; }
         jump = false;
         if (!jumpHeld) rise = 0;
+        // The second hero moves faster while rising (0x40c95e..0x40c9c4).
+        if (!wizard && rise > 0 && vx != 0) vx = Math.signum(vx) * (water ? 3 : 4) * OriginalClock.HZ;
         float nx = x + vx * dt;
-        if (vx > 0) { int c = (int) ((nx + 31) / 64); for (int r = (int) (y + 2) / 64; r <= (int) (y + 49) / 64; r++) if (solid(c, r, climb)) { nx = c * 64 - 32; break; } }
-        if (vx < 0) { int c = (int) Math.floor(nx / 64); for (int r = (int) (y + 2) / 64; r <= (int) (y + 49) / 64; r++) if (solid(c, r, climb)) { nx = (c + 1) * 64; break; } }
+        if (vx != 0 && !sideFree(vx * dt)) nx = x;
+        if (rise > 0 && !free((int) Math.floor((x + 16) / 64), Math.floorDiv((int) (y + 49) - HERO_HEIGHT, 64))) rise = 0;
         x = Math.max(0, Math.min(level.width * 64 - 32, nx));
         if (climb) vy = ((down ? CLIMB_SPEED : 0) - (up ? CLIMB_SPEED : 0)) * OriginalClock.HZ;
         else if (rise > 0) { vy = -vertical; rise -= vertical * dt; }
