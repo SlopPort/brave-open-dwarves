@@ -4,7 +4,7 @@ from pathlib import Path
 import sys
 from zipfile import ZipFile, ZIP_DEFLATED
 
-version=sys.argv[1] if len(sys.argv)>1 else "0.32"
+version=sys.argv[1] if len(sys.argv)>1 else "0.33"
 root=Path(__file__).resolve().parents[1]
 files=list((root/"android").rglob("*.java"))+[root/"android/AndroidManifest.xml"]
 files+=list((root/"tests").rglob("*.java"))+list((root/"tests").glob("*.py"))+[root/"tests/device/AndroidManifest.xml"]

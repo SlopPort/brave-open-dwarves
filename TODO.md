@@ -8,7 +8,7 @@ Zasada: mechaniki bierzemy z instrukcji EXE z podanym adresem VA. Czego nie da s
 
 ## 0. Porządki (najpierw)
 
-- [ ] `git init` i pierwszy commit (sprawdzić, czy `.gitignore` wyklucza `Gnomes.dat`, EXE/DLL, zapisy i `build/`)
+- [x] `git init` i pierwszy commit (sprawdzić, czy `.gitignore` wyklucza `Gnomes.dat`, EXE/DLL, zapisy i `build/`)
 - [ ] Przenieść `dist/` 0.1–0.31 poza drzewo projektu albo usunąć po potwierdzeniu
 - [ ] README: nagłówek i instrukcje nadal mówią o 0.6, uzupełnić o bieżącą wersję; historię przenieść do `CHANGELOG.md`
 - [ ] Parametr wersji w `build.ps1` zsynchronizować z `versionName` w manifeście
@@ -16,9 +16,9 @@ Zasada: mechaniki bierzemy z instrukcji EXE z podanym adresem VA. Czego nie da s
 
 ## 1. Refaktor pod testowalność
 
-- [ ] Wydzielić logikę gry z `OriginalGameView.java` (ok. 25 kB) do klasy `GameSession` bez zależności od Androida
-- [ ] Stały krok symulacji 75 Hz niezależny od klatek renderowania
-- [ ] Headless runner: skrypt wejść → przebieg → stan, deterministyczne ziarno RNG
+- [x] Wydzielić logikę gry z `OriginalGameView.java` (ok. 25 kB) do klasy `GameSession` bez zależności od Androida
+- [x] Stały krok symulacji 75 Hz niezależny od klatek renderowania
+- [x] Headless runner: skrypt wejść → przebieg → stan, deterministyczne ziarno RNG
 - [ ] Przeniesienie testów logiki z `DeviceTestRunner` na desktop tam, gdzie nie dotyczą dotyku/UI
 
 ## 2. Fizyka i ruch (największa luka zgodności)

@@ -1,4 +1,4 @@
-param([string]$Sdk = "$env:LOCALAPPDATA\Android\Sdk", [string]$Jdk = 'C:\Program Files\Android\Android Studio\jbr', [string]$Version = '0.32')
+param([string]$Sdk = "$env:LOCALAPPDATA\Android\Sdk", [string]$Jdk = 'C:\Program Files\Android\Android Studio\jbr', [string]$Version = '0.33')
 $ErrorActionPreference = 'Stop'
 Set-Location $PSScriptRoot
 $env:JAVA_HOME = $Jdk

@@ -10,9 +10,13 @@ import java.util.*;
 /** Device integration checks. Original private checkpoint files are restored afterward. */
 public final class DeviceTestRunner extends Instrumentation {
     Activity activity;View game;final StringBuilder report=new StringBuilder();
-    Object get(Object o,String name)throws Exception{Field f=o.getClass().getDeclaredField(name);f.setAccessible(true);return f.get(o);}
-    void set(Object o,String name,Object value)throws Exception{Field f=o.getClass().getDeclaredField(name);f.setAccessible(true);f.set(o,value);}
-    void call(Object o,String name)throws Exception{Method m=o.getClass().getDeclaredMethod(name);m.setAccessible(true);m.invoke(o);}
+    /** Game rules moved from the view to its session; view lookups fall through to it. */
+    Object session(Object o)throws Exception{if(o!=game)return null;Field f=o.getClass().getDeclaredField("session");f.setAccessible(true);return f.get(o);}
+    Object fieldOwner(Object o,String name)throws Exception{try{o.getClass().getDeclaredField(name);return o;}catch(NoSuchFieldException e){Object s=session(o);if(s==null)throw e;return s;}}
+    Object methodOwner(Object o,String name)throws Exception{try{o.getClass().getDeclaredMethod(name);return o;}catch(NoSuchMethodException e){Object s=session(o);if(s==null)throw e;return s;}}
+    Object get(Object o,String name)throws Exception{Object t=fieldOwner(o,name);Field f=t.getClass().getDeclaredField(name);f.setAccessible(true);return f.get(t);}
+    void set(Object o,String name,Object value)throws Exception{Object t=fieldOwner(o,name);Field f=t.getClass().getDeclaredField(name);f.setAccessible(true);f.set(t,value);}
+    void call(Object o,String name)throws Exception{Object t=methodOwner(o,name);Method m=t.getClass().getDeclaredMethod(name);m.setAccessible(true);m.invoke(t);}
     void check(boolean b,String message){if(!b)throw new AssertionError(message);report.append("PASS ").append(message).append('\n');}
     interface Work{void run()throws Exception;}
     void main(Work w)throws Exception{final Throwable[] error={null};runOnMainSync(new Runnable(){public void run(){try{w.run();}catch(Throwable e){error[0]=e;}}});if(error[0]!=null)throw new Exception(error[0]);}

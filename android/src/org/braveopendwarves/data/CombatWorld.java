@@ -4,6 +4,8 @@ import java.util.*;
 /** First playable combat model; not a reconstruction of original EXE behavior. */
 public final class CombatWorld {
     private static final Random random=new Random();
+    /** Makes headless runs repeatable. */
+    public static void seed(long value){random.setSeed(value);}
     private static float fireDelay(){return OriginalClock.seconds(100+random.nextInt(400));}
     public static final class Foe {
         public float x,y,vy,turnCooldown,attackCooldown,attackTime,teleportCooldown;
