@@ -280,3 +280,26 @@ Checkpoint12 appends4 uint8 ability levels and int32 selected spell after phase.
 Spell index3 at40bb28..40bb72 creates one projectile6, horizontal constructor403106, x offset half actor frame width, y=feet-20-random(20); spell cost49e400 index3 is(0,0,0,1). Type6 table damage7,range448,speed10, flags1; callback405ce0 produces type254 visual effect, not extra damage. Port implements projectile, original randomized y offset relative to hero feet, damage/range/speed/cost, unlock via orb58 and selection. Spawn x retains prototype24 offset. Impact particles from413d90 are NOT yet implemented.
 Render404f2c chooses original bte_right/bte_left then bte_r2/bte_l2 every4 ticks. Dimensions63x17 first,64x17 second right,64x16 second left. Original uses global tick; port uses projectile age.
 Original wizard attack timer40af52..40afd5: idle requires timer>spell table delay, attack phase ends after timer>15. Spell2 sets timer6 at40baf1, spell3 sets12 at40bb2b. Nominal repeat periods implemented: spell0/1=25 ticks,spell2=19,spell3=6. Hero attack pose/state itself remains provisional. Checkpoint12 layout unchanged; app now accepts selected spell3. Advanced spell indices4..11 remain unavailable.
+
+## Dźwięk i muzyka (ustalenia z EXE)
+
+Ładowanie 36 próbek: VA 0x422d50..0x422fa1, uchwyty 0x4a66f8..0x4a676c. Tylko Walk i Climb mają drugi argument 1 (0x422f1a, 0x422f2e). Odtwarzanie przez 0x4447d0.
+
+| Funkcja | Próbki |
+|---|---|
+| 0x4162b0 (przedmioty) | GoldChest, Clock, KeyPickup, DiamodPickup |
+| 0x416fc0 (drzwi) | ExitDoor |
+| 0x414b40 (windy) | LiftCreak, LiftCreakRev |
+| 0x40b6f0 (woda) | WaterSplash, fireball |
+| 0x40a5d0, 0x40c170 | Walk |
+| 0x40ab50, 0x40ca00 | Climb |
+| 0x40b940 | BoulderBlow/Start, charge, Icicle, StarShield, Tornado, bt_magic, fireball, waterarrow |
+| 0x40d760 | FireSickle, Thunder, axe |
+| 0x40dbc0 | Burn, Hammer, SeekStar, Whip, charge |
+| 0x407e60, 0x408820 | Teleport, crawler_fire |
+| 0x4090c0, 0x409730, 0x409cc0 | crawler_fire (0x4090c0 także skel_born) |
+| 0x40def0, 0x40e810 | skel_born, skel_throw |
+
+Powiązanie funkcji z dokładnym zdarzeniem wymaga analizy każdego miejsca; opisy w nawiasach pochodzą z wcześniejszych ustaleń.
+
+Muzyka poziomu (0x413367): numer mapy podzielny przez 10 daje boss_theme.it, pozostałe wybierają przez tabelę 0x41360f według motywu z offsetu 360 (globalna 0x4b05e0, wartość 0 zastępowana 1): 1=GNOM3, 2=GNOM2, 3=GNOM7, 4=GNOM9, 5=GNOM8. Blok pomijany, gdy 0x4b0460 jest niezerowe; znaczenie tej flagi nieustalone. happy_end.it: 0x427b37; gnom2.it także przy 0x42ed11. Argument odtwarzacza ustawia częstotliwość 22050 Hz lub 44100 Hz (0x4241ab, 0x4241cf).

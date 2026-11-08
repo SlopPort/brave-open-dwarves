@@ -46,6 +46,13 @@ public final class SessionTest {
                 check(first.equals(second), "repeatable run on map index " + map);
             }
 
+            check(MusicRules.track(10, 1).endsWith("boss_theme.it") && MusicRules.track(11, 2).endsWith("GNOM2.IT") && MusicRules.track(1, 6) == null, "music selection rules");
+            for (String name : probe.levels) {
+                OriginalLevel level = new OriginalLevel(archive.read(name));
+                int number = Integer.parseInt(name.replaceAll("[^0-9]", ""));
+                check(archive.read(MusicRules.track(number, level.theme)).length > 0, "music exists for " + name);
+            }
+
             GameSession clock = new GameSession(archive, save, HOST);
             clock.load(0);
             clock.tick(.05f);

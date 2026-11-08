@@ -12,7 +12,7 @@ Zasada: mechaniki bierzemy z instrukcji EXE z podanym adresem VA. Czego nie da s
 - [ ] Przenieść `dist/` 0.1–0.31 poza drzewo projektu albo usunąć po potwierdzeniu
 - [ ] README: nagłówek i instrukcje nadal mówią o 0.6, uzupełnić o bieżącą wersję; historię przenieść do `CHANGELOG.md`
 - [ ] Parametr wersji w `build.ps1` zsynchronizować z `versionName` w manifeście
-- [ ] Jeden skrypt `test-all.ps1` z podsumowaniem; `test-readers.ps1` ma na sztywno ścieżkę JDK 8
+- [x] Jeden skrypt `test-all.ps1` z podsumowaniem; `test-readers.ps1` ma na sztywno ścieżkę JDK 8
 
 ## 1. Refaktor pod testowalność
 
@@ -58,10 +58,10 @@ Zasada: mechaniki bierzemy z instrukcji EXE z podanym adresem VA. Czego nie da s
 
 ## 6. Dźwięk i muzyka
 
-- [ ] Inwentaryzacja WAV w archiwum wraz z miejscami użycia w EXE (podpięte są tylko 4: diament, klucz, drzwi, skrzynia)
+- [x] Inwentaryzacja WAV w archiwum wraz z miejscami użycia w EXE (podpięte są tylko 4: diament, klucz, drzwi, skrzynia)
 - [ ] Menedżer dźwięków z mapowaniem zdarzenie → próbka, limit strumieni
 - [ ] Odtwarzacz modułów IT (MIT lub własny, bez zasobów w APK); desktopowy render do WAV jako test
-- [ ] Przypisanie utworów do rozdziałów według EXE
+- [x] Przypisanie utworów do rozdziałów według EXE
 
 ## 7. Grafika i UI
 
