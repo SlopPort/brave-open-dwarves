@@ -63,6 +63,8 @@ public final class OriginalGameView extends View {
     void resume(){background=false;last=0;invalidate();}
     void togglePause(){session.paused=!session.paused;session.resetInput();invalidate();}
     void restore()throws IOException{session.restore();last=0;}
+    /** Advances simulated time; used by device tests. */
+    void update(float dt){for(int i=Math.max(1,Math.round(dt/GameSession.STEP));i>0;i--)session.step();}
     void txt(Canvas c,String s,float x,float y,int size,int color){paint.setColor(color);paint.setTextSize(size);c.drawText(s,x,y,paint);}
     void fill(Canvas c,float x,float y,float w,float h,int color){paint.setColor(color);c.drawRect(x,y,x+w,y+h,paint);}
     void button(Canvas c,String s,float x,float y,float w,boolean active){paint.setColor(active?0xff427d80:0xff273d50);c.drawRoundRect(x,y,x+w,y+60,10,10,paint);txt(c,s,x+12,y+38,19,0xfff3eddb);}
