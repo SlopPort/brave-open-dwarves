@@ -317,4 +317,4 @@ Czar 8 (sople, 0x40bcaf, konstruktor typu 14 przy 0x402e12): 7 pocisków, x = le
 
 Podłoże bohatera (0x415ce0): dwa punkty środek ± szerokość/8 przy stopy+1; komórka poza mapą, typ 1 lub flaga 0x20 podtrzymuje. Z tarczą także flaga 0x400. Trzymany skok startuje ponownie po wylądowaniu (0x40a8b0); blokada przy bicie 0x10 pola +0x4c i globalnej 0x4b0c80 nie jest jeszcze przeniesiona.
 
-Raport tests/ReachReport.java jest przybliżony: nie modeluje wind, drzwi ani wszystkich mechanizmów map. Mapa 35 ma przy starcie przepaście 4-6 kafelków bez wind, więc raport nie zna co najmniej jednego sposobu przejścia. Nie jest dowodem blokady.
+Raport tests/ReachReport.java jest przybliżony: nie modeluje wind, drzwi ani wszystkich mechanizmów map. Wyniki: 18/55 map dla postaci o wysokości dwóch wierszy, 28/55 dla jednego wiersza. Dziesięć map traci osiągalność tylko przez wysokość 75 px (4, 5, 8, 9, 21, 24, 26, 35, 1004, 1005), co wymaga sprawdzenia ręcznego. Nie jest to dowód blokady.
