@@ -283,7 +283,7 @@ Original wizard attack timer40af52..40afd5: idle requires timer>spell table dela
 
 ## Dźwięk i muzyka (ustalenia z EXE)
 
-Ładowanie 36 próbek: VA 0x422d50..0x422fa1, uchwyty 0x4a66f8..0x4a676c. Tylko Walk i Climb mają drugi argument 1 (0x422f1a, 0x422f2e). Odtwarzanie przez 0x4447d0.
+Ładowanie 30 próbek: VA 0x422d50..0x422fa1, uchwyty 0x4a66f8..0x4a676c. Tylko Walk i Climb mają drugi argument 1 (0x422f1a, 0x422f2e). Odtwarzanie przez 0x4447d0.
 
 | Funkcja | Próbki |
 |---|---|
@@ -318,3 +318,5 @@ Czar 8 (sople, 0x40bcaf, konstruktor typu 14 przy 0x402e12): 7 pocisków, x = le
 Podłoże bohatera (0x415ce0): dwa punkty środek ± szerokość/8 przy stopy+1; komórka poza mapą, typ 1 lub flaga 0x20 podtrzymuje. Z tarczą także flaga 0x400. Trzymany skok startuje ponownie po wylądowaniu (0x40a8b0); blokada przy bicie 0x10 pola +0x4c i globalnej 0x4b0c80 nie jest jeszcze przeniesiona.
 
 Raport tests/ReachReport.java jest przybliżony: nie modeluje wind, drzwi ani wszystkich mechanizmów map. Wyniki: 18/55 map dla postaci o wysokości dwóch wierszy, 28/55 dla jednego wiersza. Dziesięć map traci osiągalność tylko przez wysokość 75 px (4, 5, 8, 9, 21, 24, 26, 35, 1004, 1005), co wymaga sprawdzenia ręcznego. Nie jest to dowód blokady.
+
+Zawartość map bez obsługi w ItemRules (id=liczba): 9=2, 10=17, 11=12, 20=32, 34=40, 51=31, 52=1, 53=5, 54=1, 70=1, 71=1, 79=3, 88=2, 162=1, 182=4. Typy przeciwników na mapach: 2, 3, 4, 5, 6 oraz bossowie 8..12; wszystkie mają model w CombatWorld.

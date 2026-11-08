@@ -2,7 +2,7 @@ param([string]$Archive='Gnomes.dat', [string]$Jdk='C:\Program Files\Eclipse Adop
 $ErrorActionPreference='Stop'
 Set-Location $PSScriptRoot
 New-Item -ItemType Directory -Force build\reader-tests,analysis | Out-Null
-& "$Jdk\bin\javac.exe" -encoding UTF-8 -d build\reader-tests android\src\org\braveopendwarves\data\*.java tests\ReaderTest.java tests\CombatTest.java tests\RunStateTest.java tests\AnimationTest.java tests\LiftTest.java tests\DoorTest.java tests\ItemTest.java tests\EnvironmentTest.java tests\HeroFramesTest.java tests\BossTest.java tests\ProjectileTest.java tests\SessionTest.java
+& "$Jdk\bin\javac.exe" -encoding UTF-8 -d build\reader-tests android\src\org\braveopendwarves\data\*.java tests\ReaderTest.java tests\CombatTest.java tests\RunStateTest.java tests\AnimationTest.java tests\LiftTest.java tests\DoorTest.java tests\ItemTest.java tests\EnvironmentTest.java tests\HeroFramesTest.java tests\BossTest.java tests\ProjectileTest.java tests\SessionTest.java tests\FuzzTest.java tests\ReachReport.java
 if($LASTEXITCODE -ne 0){throw 'Reader compilation failed'}
 & "$Jdk\bin\java.exe" -cp build\reader-tests ReaderTest $Archive | Out-File analysis\reader-tests.txt -Encoding utf8
 if($LASTEXITCODE -ne 0){throw 'Reader tests failed'}
@@ -29,6 +29,8 @@ if($LASTEXITCODE -ne 0){throw 'Boss tests failed'}
 if($LASTEXITCODE -ne 0){throw 'Projectile tests failed'}
 & "$Jdk\bin\java.exe" -cp build\reader-tests SessionTest $Archive
 if($LASTEXITCODE -ne 0){throw 'Session tests failed'}
+& "$Jdk\bin\java.exe" -cp build\reader-tests FuzzTest $Archive
+if($LASTEXITCODE -ne 0){throw 'Fuzz tests failed'}
 if($ComparePillow){
     python tests\compare_pcx.py $Archive analysis\reader-tests.txt
     if($LASTEXITCODE -ne 0){throw 'Pillow comparison failed'}

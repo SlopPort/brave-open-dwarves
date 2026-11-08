@@ -31,7 +31,8 @@ Legenda: **[PC]** zrobione i sprawdzone na komputerze, **[TEL]** wymaga Huawei.
 - [ ] Windy: wnętrze kabiny, zgniatanie, `0x414b40`, `0x415e90..0x416046`
 - [ ] Odpychanie po trafieniu i ograniczenia sterowania
 - [ ] Woda: plusk, utrata osłony (`0x40b84f`)
-- [ ] BFS: osiągalność wyjścia i kluczy na 55 mapach przy nowych kolizjach, raport map do ręcznej kontroli
+- [x] BFS: osiągalność wyjścia i kluczy na 55 mapach przy nowych kolizjach (`tests/ReachReport.java`, przybliżony: 18/55)
+- [ ] Rozstrzygnąć wysokość 75 px: 10 map (4, 5, 8, 9, 21, 24, 26, 35, 1004, 1005) jest nieosiągalnych tylko przy tej wysokości
 
 ## 0.36: bronie i czary [PC]
 
@@ -77,7 +78,7 @@ Legenda: **[PC]** zrobione i sprawdzone na komputerze, **[TEL]** wymaga Huawei.
 
 ## 0.40: dźwięk [PC, potem TEL]
 
-- [ ] Menedżer próbek: wszystkie 36 WAV, limit kanałów, pętle `Walk` i `Climb`
+- [ ] Menedżer próbek: wszystkie 30 WAV, limit kanałów, pętle `Walk` i `Climb`
 - [ ] Każde miejsce odtwarzania z `FORMAT.md` przypięte do zdarzenia; argumenty `0x64`, `0x32` zrozumiane
 - [ ] Dźwięk w `GameSession.Host` z testem kolejności zdarzeń
 - [ ] Dekoder IT: nagłówek, wzorce, próbki, kompresja IT214
@@ -105,7 +106,7 @@ Legenda: **[PC]** zrobione i sprawdzone na komputerze, **[TEL]** wymaga Huawei.
 - [ ] Kopia i usuwanie zaimportowanych danych, komunikaty błędów importu
 - [ ] Ograniczenie alokacji w pętli i pamięci bitmap; profil na najcięższych mapach
 - [ ] Wyjątki ze sterowaniem awarią: czytelny komunikat zamiast zamknięcia
-- [ ] Headless: 55 map, wiele ziaren, losowe wejścia, brak wyjątków i wyjścia poza mapę
+- [x] Headless: 55 map, wiele ziaren, losowe wejścia, brak wyjątków i wyjścia poza mapę (`tests/FuzzTest.java`, 880 000 kroków)
 - [ ] Przenieść testy logiki z `DeviceTestRunner` na komputer
 - [ ] [TEL] 30 minut gry, temperatura, cykl tło/powrót, obrót, niski poziom baterii
 
