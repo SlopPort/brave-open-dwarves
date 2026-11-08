@@ -104,11 +104,11 @@ public final class CombatWorld {
         int cost=selectedSpell==0||selectedSpell==3?1:2;
         if(cooldown>0||health<=0||webbed>0||(wizard&&(selectedSpell<0||selectedSpell>3||abilityLevels[selectedSpell]<1||energy[selectedSpell]<cost)))return false;
         if(wizard)energy[selectedSpell]-=cost;
-        cooldown=wizard?OriginalClock.seconds(selectedSpell==3?6:selectedSpell==2?19:25):.38f;
+        cooldown=wizard?OriginalClock.seconds(selectedSpell==3?6:selectedSpell==2?19:25):OriginalClock.seconds(10);
         if(wizard){float origin=x+16+direction*24,shotY=selectedSpell==3?y+30-random.nextInt(20):y+22;if(clear(x+16,y+22,origin,shotY))bolts.add(new Bolt(origin,shotY,direction*OriginalClock.speed(selectedSpell==3?10:8),false,selectedSpell==0?1:selectedSpell==1?5:selectedSpell==2?8:6));}
         else{
             swing=.16f;
-            for(Foe f:foes)if(f.hp>0&&Math.abs(f.y+f.height()/2-y-25)<45&&(f.center()-x-16)*direction>=-f.width()/2&&(f.center()-x-16)*direction-f.width()/2<86&&clear(x+16,y+22,f.center(),f.y+f.height()/2)){hitFoe(f,8,0);}
+            for(Foe f:foes)if(f.hp>0&&Math.abs(f.y+f.height()/2-y-25)<45&&(f.center()-x-16)*direction>=-f.width()/2&&(f.center()-x-16)*direction-f.width()/2<86&&clear(x+16,y+22,f.center(),f.y+f.height()/2)){hitFoe(f,35,0);}
         }
         return true;
     }

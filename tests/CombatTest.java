@@ -9,7 +9,7 @@ public final class CombatTest {
     }
     public static void main(String[] args)throws Exception{
         CombatWorld w=new CombatWorld(map());CombatWorld.Foe f=new CombatWorld.Foe(4,160,206);w.foes.add(f);f.hp=8;
-        check(w.attack(100,206,1,false),"melee accepted");check(f.hp==0&&w.kills==1,"melee kill");
+        check(w.attack(100,206,1,false),"melee accepted");check(f.hp<=0&&w.kills==1,"melee kill");
         check(!w.attack(100,206,1,false),"cooldown enforced");
         w=new CombatWorld(map());f=new CombatWorld.Foe(4,160,206);w.foes.add(f);
         w.attack(100,206,-1,false);check(f.hp==50,"melee direction");
@@ -38,7 +38,7 @@ public final class CombatTest {
         for(int i=0;i<120;i++)w.update(1f/120,0,0);check(Math.abs(f.y+20-256)<.1f,"worm rests on floor using short body");
         w=new CombatWorld(map());f=new CombatWorld.Foe(6,400,232);w.foes.add(f);
         for(int i=0;i<360;i++)w.update(1f/120,100,206);check(w.health<20,"crawler projectile damages hero");check(f.hp==15,"hostile bolt does not damage shooter");
-        w=new CombatWorld(map());f=new CombatWorld.Foe(5,160,196);w.foes.add(f);w.attack(100,206,1,false);check(f.hp==67&&w.kills==0,"large skeleton survives one melee strike");
+        w=new CombatWorld(map());f=new CombatWorld.Foe(5,160,196);w.foes.add(f);w.attack(100,206,1,false);check(f.hp==40&&w.kills==0,"large skeleton survives one melee strike");
         System.out.println("PASS combat: melee, facing, cooldown, projectiles, damage, immunity, death, patrol, healing");
     }
 }
