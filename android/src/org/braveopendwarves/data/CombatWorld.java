@@ -38,12 +38,13 @@ public final class CombatWorld {
     public final int[] abilityLevels={1,0,0,0};
     public int selectedSpell;
     public void collectPowerOrb(int type){int channel=ItemRules.powerOrbChannel(type);if(channel>=0)abilityLevels[channel]=(abilityLevels[channel]+1)&255;}
-    /** Spell id is channel+tier*4; costs from 0x49e400, only ids below this limit are implemented. */
-    public static final int IMPLEMENTED_SPELLS=5;
+    /** Spell id is channel+tier*4; costs from 0x49e400. */
+    public static final int SPELL_COUNT=12;
+    public static boolean spellImplemented(int id){return id>=0&&id<5||id==8;}
     private static final int[] SPELL_COST={1,2,2,1,5,3,5,5,7,3,7,7};
     /** Unlock rule from 0x417768: channel level must reach tier+1. */
-    public boolean spellUnlocked(int id){return id>=0&&id<IMPLEMENTED_SPELLS&&abilityLevels[id%4]>=id/4+1;}
-    public void cycleSpell(){for(int step=1;step<=IMPLEMENTED_SPELLS;step++){int next=(selectedSpell+step)%IMPLEMENTED_SPELLS;if(spellUnlocked(next)){selectedSpell=next;return;}}}
+    public boolean spellUnlocked(int id){return spellImplemented(id)&&abilityLevels[id%4]>=id/4+1;}
+    public void cycleSpell(){for(int step=1;step<=SPELL_COUNT;step++){int next=(selectedSpell+step)%SPELL_COUNT;if(spellUnlocked(next)){selectedSpell=next;return;}}}
 
     public float energyClock;
     public void regenerateEnergy(float dt,boolean wizard){
@@ -110,6 +111,7 @@ public final class CombatWorld {
         if(cooldown>0||health<=0||webbed>0||(wizard&&(!spellUnlocked(selectedSpell)||energy[selectedSpell%4]<cost)))return false;
         if(wizard)energy[selectedSpell%4]-=cost;
         cooldown=wizard?OriginalClock.seconds(selectedSpell==3?6:selectedSpell==2?19:25):OriginalClock.seconds(10);
+        if(wizard&&selectedSpell==8){for(int i=0;i<7;i++){Bolt b=new Bolt(viewportX+10+random.nextInt(Math.max(1,(int)viewportWidth-20)),viewportY,0,false,14);b.damage=15;b.verticalSpeed=OriginalClock.speed(7+random.nextInt(4));bolts.add(b);}return true;}
         if(wizard&&selectedSpell==4){float origin=x+16+direction*35,shotY=y+24;if(clear(x+16,y+24,origin,shotY)){Bolt b=new Bolt(origin,shotY,direction*OriginalClock.speed(6),false,10);b.damage=1;b.life=1920f/OriginalClock.speed(6);bolts.add(b);}return true;}
         if(wizard){float origin=x+16+direction*24,shotY=selectedSpell==3?y+30-random.nextInt(20):y+22;if(clear(x+16,y+22,origin,shotY))bolts.add(new Bolt(origin,shotY,direction*OriginalClock.speed(selectedSpell==3?10:8),false,selectedSpell==0?1:selectedSpell==1?5:selectedSpell==2?8:6));}
         else{

@@ -43,6 +43,9 @@ public final class CombatTest {
         w.abilityLevels[0]=2;w.cycleSpell();check(w.selectedSpell==4,"tornado unlocks at level two");
         w.energy[0]=4;check(!w.attack(100,206,1,true),"tornado needs five energy");
         w.energy[0]=5;check(w.attack(100,206,1,true)&&w.energy[0]==0&&w.bolts.get(0).kind==10&&w.bolts.get(0).damage==1,"tornado uses original cost and shot");
+        w=new CombatWorld(map());w.viewportWidth=960;w.abilityLevels[0]=3;w.selectedSpell=4;w.cycleSpell();check(w.selectedSpell==8,"icicles unlock at level three");
+        w.energy[0]=7;check(w.attack(100,206,1,true)&&w.energy[0]==0&&w.bolts.size()==7,"icicles cost seven and spawn seven shots");
+        for(CombatWorld.Bolt b:w.bolts)check(!b.hostile&&b.kind==14&&b.damage==15&&b.verticalSpeed>0,"icicle uses original shot");
         System.out.println("PASS combat: melee, facing, cooldown, projectiles, damage, immunity, death, patrol, healing");
     }
 }

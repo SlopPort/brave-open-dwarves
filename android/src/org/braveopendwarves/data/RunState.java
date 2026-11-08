@@ -111,7 +111,7 @@ public final class RunState {
             legacyHealth=false;
         }
         if(Float.isNaN(energyClock)||Float.isInfinite(energyClock)||energyClock<0||energyClock>=128)throw new IOException("Nieprawidlowy licznik energii");
-        if(abilityLevels==null||abilityLevels.length!=4||selectedSpell<0||selectedSpell>=CombatWorld.IMPLEMENTED_SPELLS)throw new IOException("Nieprawidlowy wybor czaru");
+        if(abilityLevels==null||abilityLevels.length!=4||!CombatWorld.spellImplemented(selectedSpell))throw new IOException("Nieprawidlowy wybor czaru");
         for(int levelValue:abilityLevels)if(levelValue<0||levelValue>255)throw new IOException("Nieprawidlowy poziom umiejetnosci");
         if(abilityLevels[selectedSpell%4]<selectedSpell/4+1)throw new IOException("Zapis wybral zablokowany czar");
         if(energy==null||energy.length!=4)throw new IOException("Nieprawidlowa energia");
