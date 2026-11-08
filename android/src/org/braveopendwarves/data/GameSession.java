@@ -18,6 +18,11 @@ public final class GameSession {
 
     public static final float STEP = 1f / OriginalClock.HZ;
     private static final float MAX_FRAME = .05f;
+    /** Pixels per original step; jump height is a pixel budget set at 0x40a920. */
+    public static final int WALK_SPEED = 3, AIR_SPEED = 4, WATER_SPEED = 2, CLIMB_SPEED = 2, JUMP_HEIGHT = 120;
+    private float rise;
+    /** Jump button currently down; releasing it ends the rise. */
+    public boolean jumpHeld;
 
     private final GogArchive archive;
     private final File saveFile;
@@ -48,7 +53,7 @@ public final class GameSession {
 
     public int totalScore() { return bankedScore + ItemRules.score(level); }
 
-    public void resetInput() { left = right = up = down = jump = fire = false; }
+    public void resetInput() { left = right = up = down = jump = jumpHeld = fire = false; }
 
     public void load(int index) {
         try {
@@ -210,20 +215,28 @@ public final class GameSession {
     private void move(float dt) {
         boolean onLadder = level.ladder((int) (x + 16) / 64, (int) (y + 25) / 64) || level.ladder((int) (x + 16) / 64, (int) (y + 51) / 64);
         boolean climb = onLadder && (up || down || climbing);
+        // Snap to the ladder column when grabbing it (0x40a87d).
+        if (climb && !climbing) x = (int) (x + 16) / 64 * 64 + 16;
         climbing = climb;
-        float vx = (left ? -180 : 0) + (right ? 180 : 0);
+        // Original movement is constant pixels per step: 0x40a6ed walk, 0x40aa56 rise, 0x40ae12 fall.
+        boolean water = environment.water;
+        float walk = (water ? WATER_SPEED : WALK_SPEED) * OriginalClock.HZ, vertical = (water ? WATER_SPEED : AIR_SPEED) * OriginalClock.HZ;
+        float vx = right ? walk : left ? -walk : 0;
         if (vx != 0) facing = vx > 0 ? 1 : -1;
-        if (jump && (ground || climb)) { vy = -450; ground = false; climb = climbing = false; }
+        if (jump && (ground || climb)) { rise = JUMP_HEIGHT; ground = false; climb = climbing = false; }
         jump = false;
+        if (!jumpHeld) rise = 0;
         float nx = x + vx * dt;
         if (vx > 0) { int c = (int) ((nx + 31) / 64); for (int r = (int) (y + 2) / 64; r <= (int) (y + 49) / 64; r++) if (solid(c, r, climb)) { nx = c * 64 - 32; break; } }
         if (vx < 0) { int c = (int) Math.floor(nx / 64); for (int r = (int) (y + 2) / 64; r <= (int) (y + 49) / 64; r++) if (solid(c, r, climb)) { nx = (c + 1) * 64; break; } }
         x = Math.max(0, Math.min(level.width * 64 - 32, nx));
-        if (climb) vy = (down ? 125 : 0) - (up ? 125 : 0); else vy += 1000 * dt;
+        if (climb) vy = ((down ? CLIMB_SPEED : 0) - (up ? CLIMB_SPEED : 0)) * OriginalClock.HZ;
+        else if (rise > 0) { vy = -vertical; rise -= vertical * dt; }
+        else vy = vertical;
         float ny = y + vy * dt;
         ground = false;
         if (vy >= 0) { int r = (int) ((ny + 50) / 64); for (int c = (int) (x + 2) / 64; c <= (int) (x + 29) / 64; c++) if (solid(c, r, climb)) { ny = r * 64 - 50; vy = 0; ground = true; break; } }
-        else { int r = (int) Math.floor(ny / 64); for (int c = (int) (x + 2) / 64; c <= (int) (x + 29) / 64; c++) if (solid(c, r, climb)) { ny = (r + 1) * 64; vy = 0; break; } }
+        else { int r = (int) Math.floor(ny / 64); for (int c = (int) (x + 2) / 64; c <= (int) (x + 29) / 64; c++) if (solid(c, r, climb)) { ny = (r + 1) * 64; vy = 0; rise = 0; break; } }
         if (vy >= 0) for (LiftWorld.Lift lift : lifts.lifts) {
             float floor = lift.floor();
             if (x + 29 > lift.x - lift.halfWidth() && x + 2 < lift.x + lift.halfWidth() && y + 50 <= floor + 3 && ny + 50 >= floor && floor - 50 <= ny) { ny = floor - 50; vy = 0; ground = true; }

@@ -23,7 +23,7 @@ Zasada: mechaniki bierzemy z instrukcji EXE z podanym adresem VA. Czego nie da s
 
 ## 2. Fizyka i ruch (największa luka zgodności)
 
-- [ ] Odtworzyć z EXE: prędkości chodu, skok, grawitacja, opadanie
+- [x] Odtworzyć z EXE: prędkości chodu, skok, grawitacja, opadanie
 - [ ] Kolizja gracza z kafelkami według oryginalnych hitboxów
 - [ ] Drabiny i windy: logika wnętrza kabiny (0x415e90 i dalej)
 - [ ] Fizyka wody poza licznikiem oddechu; flaga osłony w wodzie (0x40b84f)

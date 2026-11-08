@@ -180,11 +180,11 @@ public final class OriginalGameView extends View {
             if(b>=494&&b<516&&a>=770){if(s.wizard)s.combat.cycleSpell();return true;}
             if(b>=470&&a>=374&&a<512){s.wizard=!s.wizard;return true;}
         }
-        s.left=s.right=s.up=s.down=s.fire=false;
+        s.left=s.right=s.up=s.down=s.fire=s.jumpHeld=false;
         if(action!=MotionEvent.ACTION_CANCEL)for(int i=0;i<event.getPointerCount();i++){
             if((action==MotionEvent.ACTION_UP||action==MotionEvent.ACTION_POINTER_UP)&&i==event.getActionIndex())continue;
             a=(event.getX(i)-ox)/scale;b=(event.getY(i)-oy)/scale;
-            if(b>=470){if(a<80)s.left=true;else if(a<160)s.right=true;else if(a<265)s.up=true;else if(a<360)s.down=true;else if(a>=645&&a<755)s.fire=true;else if(a>=530&&a<630&&(action==MotionEvent.ACTION_DOWN||action==MotionEvent.ACTION_POINTER_DOWN)&&i==event.getActionIndex())s.jump=true;}
+            if(b>=470){if(a<80)s.left=true;else if(a<160)s.right=true;else if(a<265)s.up=true;else if(a<360)s.down=true;else if(a>=645&&a<755)s.fire=true;else if(a>=530&&a<630&&true){s.jumpHeld=true;if((action==MotionEvent.ACTION_DOWN||action==MotionEvent.ACTION_POINTER_DOWN)&&i==event.getActionIndex())s.jump=true;}}
         }return true;
     }
 }

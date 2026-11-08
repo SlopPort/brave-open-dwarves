@@ -53,6 +53,35 @@ public final class SessionTest {
                 check(archive.read(MusicRules.track(number, level.theme)).length > 0, "music exists for " + name);
             }
 
+            int fullJumps = 0, walks = 0, releases = 0;
+            for (int map = 0; map < maps; map++) {
+                GameSession p = new GameSession(archive, save, HOST);
+                p.load(map);
+                p.combat.foes.clear();
+                for (int i = 0; i < 400 && !p.ground; i++) p.step();
+                if (!p.ground || p.environment.water) continue;
+                float x0 = p.x, y0 = p.y;
+                p.right = true;
+                p.step();
+                p.right = false;
+                if (p.ground && p.x - x0 == GameSession.WALK_SPEED) walks++;
+                y0 = p.y;
+                p.jump = p.jumpHeld = true;
+                for (int i = 0; i < 2; i++) p.step();
+                if (Math.abs(y0 - p.y - 8) < .01f) {
+                    for (int i = 2; i < GameSession.JUMP_HEIGHT / GameSession.AIR_SPEED; i++) p.step();
+                    float risen = y0 - p.y;
+                    check(risen <= GameSession.JUMP_HEIGHT + .5f, "jump never exceeds budget on map index " + map + ": " + risen);
+                    if (Math.abs(risen - GameSession.JUMP_HEIGHT) < .5f) fullJumps++;
+                    p.jumpHeld = false;
+                    float top = p.y;
+                    p.step();
+                    check(p.ground || Math.abs(p.y - top - GameSession.AIR_SPEED) < .01f, "constant fall speed on map index " + map);
+                    releases++;
+                }
+            }
+            check(walks > 20 && fullJumps > 5 && releases > 5, "physics exercised: walks=" + walks + " jumps=" + fullJumps + " releases=" + releases);
+
             GameSession clock = new GameSession(archive, save, HOST);
             clock.load(0);
             clock.tick(.05f);
